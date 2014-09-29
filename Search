@@ -1,0 +1,31 @@
+public boolean searchMatrix(int[][] matrix, int target) {  
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0)
+            return false;
+        int start = 0;
+        int end = matrix.length - 1;
+        while(start <= end) {
+            int mid = start + (end - start)/2;
+            if(matrix[mid][0] == target)
+                return true;
+            else if (matrix[mid][0] > target) {
+                end = mid - 1;
+            }else {
+                start = mid + 1;
+            }
+        }
+        if(end < 0)
+            return false;
+        int level = end;
+        start = 0;
+        end = matrix[0].length - 1;
+        while(start <= end) {
+            int mid = start + (end-start)/2;
+            if(matrix[level][mid] == target)
+                return true;
+            else if(matrix[level][mid] > target)
+                end = mid - 1;
+            else
+                start = mid + 1;
+        }
+        return false;
+    } 

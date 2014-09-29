@@ -1,3 +1,6 @@
+// After the end of while cycle, end will be less than start,
+// if target is smallest, then end will be -1.
+
 public boolean searchMatrix(int[][] matrix, int target) {  
         if(matrix == null || matrix.length == 0 || matrix[0].length == 0)
             return false;

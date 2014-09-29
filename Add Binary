@@ -1,0 +1,35 @@
+// Given two binary strings, return their sum (also a binary string).
+// Two points to notice:
+// 1. At the end, check whether carry > 1
+// 2. In the first while, we just loop Math.min(aLen,bLen) time.
+
+public String addBinary(String a, String b) { 
+        if(a == null || a.length() == 0)
+            return b;
+        if(b == null || b.length() == 0)
+            return a;
+        int carry = 0;
+        int aLen = a.length()-1, bLen = b.length()-1;
+        StringBuilder sb = new StringBuilder();
+        while(aLen >= 0 && bLen >= 0) {
+            int digit = (int)(a.charAt(aLen--) - '0' + b.charAt(bLen--) - '0') + carry;
+            carry = digit/2;
+            digit %= 2;
+            sb.append(digit);
+        }
+        while(aLen >= 0) {
+            int digit = (int)(a.charAt(aLen--) - '0') + carry;
+            carry = digit / 2;
+            digit %= 2;
+            sb.append(digit);
+        }
+        while(bLen >= 0) {
+            int digit = (int)(b.charAt(bLen--) - '0') + carry;
+            carry = digit/2;
+            digit %= 2;
+            sb.append(digit);
+        }
+        if(carry > 0)
+            sb.append(1);
+        return sb.reverse().toString();
+    }

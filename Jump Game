@@ -1,0 +1,14 @@
+//Using DP, we use two variables, one of the store the max position from this step.
+// Another variable store the max position that it can research
+
+public boolean canJump(int[] A) {
+        if(A == null || A.length == 0)
+            return true;
+        int localMax = 0;
+        int globalMax = 0;
+        for(int i=0;i<A.length && globalMax>=i;i++) {
+            localMax = A[i] + i;
+            globalMax = Math.max(globalMax,localMax);
+        }
+        return globalMax>=A.length-1? true: false;
+    }

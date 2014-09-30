@@ -1,0 +1,34 @@
+// One easy solution. Time complexity: O(n^2)
+public int largestRectangleArea(int[] height) { 
+        if(height == null || height.length == 0)
+            return 0;
+        int left[] = new int[height.length];
+        int right[] = new int[height.length];
+        left[0] = height[0];
+        right[height.length - 1] = height[height.length - 1];
+        int res = 0;
+        for(int i=1;i<height.length;i++) {
+            int tmp = 0;
+            for(int j=i-1;j>=0;j--) {
+                if(height[j] <= height[i])
+                    tmp++;
+                else
+                    break;
+            }
+            left[i] = tmp;
+        }
+        for(int i=height.length-2;i>=0;i--) {
+            int tmp = 0;
+            for(int j=i+1;j<height.length;j++) {
+                if(height[i] <= height[j])
+                    tmp++;
+                else
+                    break;
+            }
+            right[i] = tmp;
+        }
+        for(int i=0;i<height.length;i++) {
+            res = Math.max(res,(left[i] + right[i] + 1)*height[i]);
+        }
+        return res;
+    }

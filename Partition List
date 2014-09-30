@@ -1,0 +1,25 @@
+// Very similar to vmware orc question.
+
+//Using iterator O(n)
+public ListNode partition(ListNode head, int x) { 
+        if(head == null || head.next == null)
+            return head;
+        ListNode helper = new ListNode(0);
+        helper.next = head;
+        ListNode left = helper,right = helper;
+        while(right != null && right.next != null) {
+            if(right.next.val >= x) {
+                right = right.next;
+            }else if(left != right) {
+                ListNode next = right.next;
+                right.next = next.next;
+                next.next = left.next;
+                left.next = next;
+                left = left.next;
+            }else {
+                left = left.next;
+                right = right.next;
+            }
+        }
+        return helper.next;
+    }

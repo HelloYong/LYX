@@ -1,5 +1,5 @@
 //Given an array of strings, return all groups of strings that are anagrams.
-
+//If strs.length == n; Max(strs[i].length()) = k, then time: O(nklogk), space O(nk)
 public List<String> anagrams(String[] strs) { 
         List<String> list = new ArrayList<String>();
         if(strs == null || strs.length == 0)

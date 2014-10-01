@@ -1,0 +1,26 @@
+public List<List<Integer>> permute(int [] num) { 
+        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        if(num == null || num.length == 0)
+            return list;
+        List<Integer> childList = new ArrayList<Integer>();
+        int visited[] = new int[num.length];
+        helper(list,childList,0,num,visited);
+        return list;
+    }
+    
+    public void helper(List<List<Integer>> list,List<Integer> childList, int level,int [] num, int [] visited) {
+        if(level == num.length) {
+            List<Integer> tmp = new ArrayList<Integer>(childList);
+            list.add(tmp);
+            return;
+        }
+        for(int i=0;i<num.length;i++) {
+            if(visited[i] == 0) {
+                childList.add(num[i]);
+                visited[i] = 1;
+                helper(list,childList,level+1,num,visited);
+                visited[i] = 0;
+                childList.remove(childList.size()-1);
+            }
+        }
+    }

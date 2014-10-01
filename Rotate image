@@ -1,0 +1,44 @@
+//O(n^2)
+// rotate every circle.
+// 1  2  3  4
+// 5  6  7  8
+// 9  10 11 12
+// 13 14 15 16
+// 1 --> 13 --> 16 --> 4 --> 1 && 2 --> 9 --> 15 --> 8 --> 2 && 3 --> 5 -->14 --> 12 --> 3  
+public void rotate(int[][] matrix) {
+        if(matrix == null || matrix.length == 0)
+            return;
+        int size = matrix.length;
+        for(int i=0;i<size/2;i++) {
+            for(int j=i;j<size-1-i;j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[size-1-j][i];
+                matrix[size-1-j][i] = matrix[size-1-i][size-1-j];
+                matrix[size-1-i][size-1-j] = matrix[j][size-1-i];
+                matrix[j][size-1-i] = tmp;
+            }
+        }
+    }
+    
+    
+  //Another different solution.O(n^2)
+  // Fist rotate image in / direction, then rotate in - direction
+  public void rotate(int[][] matrix) {
+      int size = matrix.length;
+    	int tmp = 0;
+    	for(int r=0;r<size;r++) {
+    		for(int c=0;c<size-r-1;c++) {
+    			tmp = matrix[r][c];
+    			matrix[r][c] = matrix[size-c-1][size-r-1];
+    			matrix[size-c-1][size-r-1] = tmp;
+    		}
+    	}
+    	
+    	for(int i=0; i<size/2; i++) {
+    		for(int j=0;j<size; j++) {
+    			tmp = matrix[i][j];
+    			matrix[i][j] = matrix[size-i-1][j];
+    			matrix[size-i-1][j] = tmp;
+    		}
+    	}
+    }

@@ -1,0 +1,38 @@
+Solution1: O(n^2)
+public static int Solution2(int arr[], int target) {
+		int minLen = Integer.MAX_VALUE;
+		int res = -1;
+		for(int i=0;i<arr.length;i++) {
+			int cur = arr[i];
+			if(cur > target)
+				return i;
+			for(int j=i+1;j<arr.length;j++) {
+				cur += arr[j];
+				if(cur > target && j-i+1 < minLen) {
+					minLen = j-i+1;
+				}
+			}
+		}
+		return res;
+	}
+//Solution2 Using O(n)
+// Use two pointers left and right. dynamically window
+public static int Solution3(int [] arr, int target) {
+		int minLen = arr.length + 1;
+		int sum = 0;
+		int right = 0, left = 0;
+		while(right < arr.length) {
+			while(sum <= target && right < arr.length) {
+				sum += arr[right++];
+			}
+			while(sum > target && left < arr.length) {
+				if(right-left < minLen) {
+					minLen = right - left;
+				}
+				sum -= arr[left++];
+			}
+		}
+		System.out.println(minLen);
+		return minLen;
+	}
+

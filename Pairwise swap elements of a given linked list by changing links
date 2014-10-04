@@ -15,3 +15,14 @@ public static ListNode Solution5(ListNode head) {
 		}
 		return helper.next;
 	}
+	
+//Using recursive to solve this problem
+public static ListNode Solution6(ListNode head) {
+		if(head == null || head.next == null)
+			return head;
+		ListNode remaining = head.next.next;
+		ListNode newHead = head.next;
+		head.next.next = head;
+		head.next = Solution6(remaining);
+		return newHead;
+	}

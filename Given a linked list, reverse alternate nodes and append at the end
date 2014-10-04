@@ -1,0 +1,20 @@
+//Given a linked list, reverse alternate nodes and append at the end
+
+public static ListNode Solution4(ListNode head) {
+		if(head == null || head.next == null || head.next.next == null)
+			return head;
+		ListNode helper = new ListNode(0);
+		ListNode walker = head;
+		while(walker!= null && walker.next != null && walker.next.next != null) {
+			ListNode tmp = walker.next;
+			walker.next = tmp.next;
+			tmp.next = helper.next;
+			helper.next = tmp;
+			walker = walker.next;
+		}
+		if(walker.next == null)
+			walker.next = helper.next;
+		else
+			walker.next.next = helper.next;
+		return head;
+	}

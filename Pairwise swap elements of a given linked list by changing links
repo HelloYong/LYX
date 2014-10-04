@@ -1,0 +1,17 @@
+//1->2->3->4->5->6->7 then the function should change it to 2->1->4->3->6->5->7, 
+public static ListNode Solution5(ListNode head) {
+		if(head == null || head.next == null)
+			return head;
+		ListNode helper = new ListNode(0);
+		helper.next = head;
+		ListNode walker = helper;
+		while(walker!=null && walker.next != null && walker.next.next != null) {
+			ListNode next = walker.next.next.next;
+			ListNode ln = walker.next;
+			walker.next = ln.next;
+			ln.next = next;
+			walker.next.next = ln;
+			walker = walker.next.next;
+		}
+		return helper.next;
+	}

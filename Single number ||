@@ -1,0 +1,35 @@
+//Use bit operation
+public int singleNumber(int[] A) {
+        int digits [] = new int[32];
+        int res = 0;
+        for(int i=0;i<32;i++) {
+            for(int i=0;i<A.length;i++) {
+                digits[i] += (A[i]>>i)&1;
+            }
+        }
+        for(int i=0;i<32;i++) {
+            res += (digits[i]%3)<<i;
+        }
+        return res;
+    }
+  
+//Using hashmap
+public int singleNumber(int[] A) { 
+        if(A == null || A.length == 0)
+            return 0;
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(int i=0;i<A.length;i++) {
+            if(map.containsKey(A[i])) {
+                map.put(A[i],map.get(A[i])+1);
+            }else {
+                map.put(A[i],1);
+            }
+        }
+        Iterator iter = map.entrySet().iterator();
+        while(iter.hasNext()) {
+            Map.Entry pairs = (Map.Entry)iter.next();
+            if((Integer)pairs.getValue() == 1)
+                return ((Integer)pairs.getKey()).intValue();
+        }
+        return 0;
+    }

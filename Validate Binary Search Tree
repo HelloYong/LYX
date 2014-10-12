@@ -1,0 +1,33 @@
+//The inoder sequence is ascending.
+public boolean isValidBST(TreeNode root) { 
+        if(root == null)
+            return true;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        list.add(null);
+        return helper(root,list);
+    }
+    
+    public boolean helper(TreeNode root, ArrayList<Integer> list) {
+        if(root == null)
+            return true;
+        boolean left = helper(root.left,list);
+        if(list.get(0)!= null && list.get(0) >= root.val)
+            return false;
+        list.set(0,root.val);
+        return left && helper(root.right,list);
+    }
+    
+//Another solution:
+public boolean isValidBST(TreeNode root) {
+        if(root == null)
+            return true;
+        return helper(root,Integer.MAX_VALUE,Integer.MIN_VALUE);
+    }
+    
+    public boolean helper(TreeNode root,int max, int min) {
+        if(root == null)
+            return true;
+        if(root.val >= max || root.val <= min)
+            return false;
+        return helper(root.left,root.val,min) && helper(root.right,max,root.val);
+    }

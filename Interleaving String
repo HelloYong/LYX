@@ -1,0 +1,40 @@
+//2D DP: String, usually consider the res[i][j]
+//res[i][j] = res[i-1][j]&&s1.charAt(i-1)==s3.charAt(i+j-1) || res[i][j-1]&&s2.charAt(j-1)==s3.charAt(i+j-1)
+public boolean isInterleave(String s1, String s2, String s3) {
+        if(s1.length() + s2.length() != s3.length())
+            return false;
+        boolean [][] grid = new boolean[s1.length()+1][s2.length()+1];
+        grid[0][0] = true;
+        for(int i=0;i<s2.length();i++) {
+            grid[0][i+1] = s2.charAt(i) == s3.charAt(i) && grid[0][i];
+        }
+        for(int i=0;i<s1.length();i++) {
+            grid[i+1][0] = s1.charAt(i) == s3.charAt(i) && grid[i][0];
+        }
+        
+        for(int i=0;i<s1.length();i++) {
+            for(int j=0;j<s2.length();j++) {
+                grid[i+1][j+1] = s1.charAt(i) == s3.charAt(i+j+1) && grid[i][j+1] 
+                            || s2.charAt(j) == s3.charAt(i+j+1) && grid[i+1][j];
+            }
+        }
+        return grid[s1.length()][s2.length()];
+    }
+    
+//Still 2D DP but use only 1D array
+public boolean isInterleave(String s1, String s2, String s3) { 
+        if(s1.length() + s2.length() != s3.length())
+            return false;
+        boolean [] res = new boolean[s2.length()+1];
+        res[0] = true;
+        for(int i=0;i<s2.length();i++) {
+            res[i+1] = res[i] && s2.charAt(i) == s3.charAt(i);
+        }
+        for(int i=0;i<s1.length();i++) {
+            res[0] = res[0] && s1.charAt(i) == s3.charAt(i);
+            for(int j=0;j<s2.length();j++) {
+                res[j+1] = (s1.charAt(i) == s3.charAt(i+j+1) && res[j+1]) || (s2.charAt(j)==s3.charAt(i+j+1) && res[j]);
+            }
+        }
+        return res[s2.length()];
+    }

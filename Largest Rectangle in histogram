@@ -32,3 +32,29 @@ public int largestRectangleArea(int[] height) {
         }
         return res;
     }
+
+//Using stack, the time complexity is O(n).
+// Useful link: http://www.cnblogs.com/lichen782/p/leetcode_Largest_Rectangle_in_Histogram.html
+public int largestRectangleArea(int[] height) {   
+        if(height == null || height.length == 0)
+            return 0;
+        Stack<Integer> stack = new Stack<Integer>();
+        int max = 0;
+        for(int i=0;i<height.length;i++) {
+            while(!stack.isEmpty()&&height[i] <= height[stack.peek()]) {
+                int index = stack.pop();
+                int curMax = stack.isEmpty() ? i*height[index] : (i-stack.peek()-1)*height[index];
+                max = Math.max(max,curMax);
+            }
+            stack.push(i);
+        }
+        while(!stack.isEmpty()) {
+            int index = stack.pop();
+            if(stack.isEmpty()) {
+                max = Math.max(max,height.length*height[index]);
+            }else {
+                max = Math.max(max,height[index]*(height.length-stack.peek()-1));
+            }
+        }
+        return max;
+    }

@@ -1,0 +1,21 @@
+//Keep a dynamical small window on both sides
+public int lengthOfLongestSubstring(String s) { 
+        if(s == null)
+            return 0;
+        if(s.length() <= 1)
+            return s.length();
+        HashSet<Character> set = new HashSet<Character>();
+        int max = 0;
+        int index = 0;
+        for(int i=0;i<s.length();i++) {
+            if(set.contains(s.charAt(i))) {
+                while(s.charAt(index) != s.charAt(i)) {
+                    set.remove(s.charAt(index++));
+                }
+                set.remove(index++);
+            }
+            set.add(s.charAt(i));
+            max = Math.max(max,set.size());
+        }
+        return max;
+    }

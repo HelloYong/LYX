@@ -1,0 +1,22 @@
+//Use stack
+public String simplifyPath(String path) {
+        if(path == null || path.length() == 0)
+            return path;
+        Stack<String> stack = new Stack<String>();
+        StringBuilder sb = new StringBuilder();
+        String str[] = path.split("/");
+        for(int i=0;i<str.length;i++) {
+            if(str[i].equals("..")) {
+                if(!stack.isEmpty()) {
+                    sb.delete(sb.lastIndexOf("/"),sb.length());
+                    stack.pop();
+                }
+            }else if(str[i].equals(".") || str[i].length() == 0){
+                
+            }else {
+                sb.append("/").append(str[i]);
+                stack.push(str[i]);
+            }
+        }
+        return sb.length() == 0? "/":sb.toString();
+    }

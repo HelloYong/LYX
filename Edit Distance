@@ -1,0 +1,29 @@
+//Still have questions about this problem
+//1. 题中要求是将word1 convert Word2，word2应该是不能被改变的，为什么要插入Word2呢？
+//2. 能否详细解释下为什么删除操作可以用插入操作替代？
+public int minDistance(String word1, String word2) {
+        if(word1.length()==0)
+            return word2.length();
+        if(word2.length()==0)
+            return word1.length();
+        String minWord = word1.length()>=word2.length()?word2:word1;
+        String maxWord = word1.length()>=word2.length()?word1:word2;
+        int [] res = new int[minWord.length()+1];
+        for(int i=0;i<=minWord.length();i++) {
+            res[i] = i;
+        }
+        
+        for(int i=0;i<maxWord.length();i++) {
+            int [] tmp = new int[minWord.length()+1];
+            tmp[0] = i+1;
+            for(int j=0;j<minWord.length();j++) {
+                if(maxWord.charAt(i) == minWord.charAt(j)) {
+                    tmp[j+1] = res[j];
+                }else {
+                    tmp[j+1] = Math.min(tmp[j],Math.min(res[j],res[j+1])) + 1;
+                }
+            }
+            res = tmp;
+        }
+        return res[res.length-1];
+    }

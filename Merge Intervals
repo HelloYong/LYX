@@ -1,0 +1,27 @@
+//Using comparator to sort the list, if start1==start2, then sort accoding to sort2;
+//Also create a new list not in-place.
+
+public List<Interval> merge(List<Interval> intervals) {
+        List<Interval> list = new ArrayList<Interval>();
+        if(intervals == null || intervals.size() == 0)
+            return intervals;
+        Comparator<Interval> comp = new Comparator<Interval>(){
+            @Override  
+            public int compare(Interval i1, Interval i2)  {  
+                if(i1.start==i2.start)  
+                    return i1.end-i2.end;  
+                return i1.start-i2.start;  
+            }
+        };
+        
+        Collections.sort(intervals,comp);
+        list.add(intervals.get(0));
+        for(int i=1;i<intervals.size();i++) {
+            if(list.get(list.size()-1).end >= intervals.get(i).start) {
+                list.get(list.size()-1).end = Math.max(intervals.get(i).end,list.get(list.size()-1).end);
+            }else {
+                list.add(intervals.get(i));
+            }
+        }
+        return list;
+    }

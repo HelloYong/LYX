@@ -1,0 +1,27 @@
+public ListNode rotateRight(ListNode head, int n) {
+        if(head == null || n <= 0)
+            return head;
+        ListNode walker = head;
+        ListNode runner = head;
+        int num = 0;
+        while(walker!=null) {
+            num++;
+            walker = walker.next;
+        }
+        walker = head;
+        int index = 0;
+        while(runner != null && index < n%num){
+            index++;
+            runner = runner.next;
+        }
+        if(runner == null)
+            return head;
+        while(runner != null && runner.next != null) {
+            walker = walker.next;
+            runner = runner.next;
+        }
+        runner.next = head;
+        ListNode newHead = walker.next;
+        walker.next = null;
+        return newHead;
+    }

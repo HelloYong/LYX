@@ -1,0 +1,21 @@
+//Implement str
+//There is another solution which using hash code with linear complexity.
+public String strStr(String haystack, String needle) { 
+        if(haystack == null || needle == null || needle.length() == 0)
+            return haystack;
+        if(haystack.length() < needle.length())
+            return null;
+        for(int i=0;i<haystack.length()-needle.length()+1;i++) {
+            boolean match = true;
+            for(int j=0;j<needle.length();j++) {
+              if(haystack.charAt(i+j) != needle.charAt(j)) {
+                  match = false;
+                  break;
+              }
+            }
+            if(match) {
+                return haystack.substring(i,haystack.length());
+            }
+        }
+        return null;
+    }

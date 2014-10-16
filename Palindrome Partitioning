@@ -1,0 +1,38 @@
+//Create a dict for the sub string of string s using the way in longest palindrome substring.
+public List<List<String>> partition(String s) {
+        List<List<String>> list = new ArrayList<List<String>>();
+        if(s == null || s.length() == 0)
+            return list;
+        List<String> childList = new ArrayList<String>();
+        helper(list,childList,0,s,dict(s));
+        return list;
+    }
+    
+    private void helper(List<List<String>> list,List<String> childList,int k,String s,boolean[][] dict) {
+        if(k == s.length()) {
+            List<String> tmp = new ArrayList<String>(childList);
+            list.add(tmp);
+            return;
+        }
+        StringBuffer sb = new StringBuffer();
+        for(int i=k;i<s.length();i++) {
+            sb.append(s.charAt(i));
+            if(dict[k][i]) {
+                childList.add(sb.toString());
+                helper(list,childList,i+1,s,dict);
+                childList.remove(childList.size() - 1);
+            }
+        }
+    }
+    
+    private boolean [][] dict(String s) {
+        boolean [][] dict = new boolean[s.length()][s.length()];
+        for(int i=s.length()-1;i>=0;i--) {
+            for(int j=i;j<s.length();j++) {
+                if(s.charAt(i) == s.charAt(j) && (j-i<2 || dict[i+1][j-1])) {
+                    dict[i][j] = true;
+                }
+            }
+        }
+        return dict;
+    }

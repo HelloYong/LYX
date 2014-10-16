@@ -1,0 +1,23 @@
+// NP solution
+public List<String> wordBreak(String s, Set<String> dict) {
+        List<String> list = new ArrayList<String>();
+        if(s == null || s.length() == 0 || dict == null || dict.size() == 0)
+            return list;
+        helper(list,"",0,s,dict);
+        return list;
+    }
+    
+    private void helper(List<String> list, String sb,int index,String s, Set<String> dict) {
+        if(index == s.length()) {
+            list.add(sb);
+            return;
+        }
+        StringBuilder tmp  = new StringBuilder();
+        for(int i=index;i<s.length();i++) {
+            tmp.append(s.charAt(i));
+            if(dict.contains(tmp.toString())) {
+                String newStr = sb.length() > 0? sb+ " " + tmp.toString(): tmp.toString();
+                helper(list,newStr,i+1,s,dict);
+            }
+        }
+    }

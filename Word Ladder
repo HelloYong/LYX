@@ -1,0 +1,34 @@
+public int ladderLength(String start, String end, Set<String> dict) { 
+        if(dict == null || dict.size() == 0 || start == null || end == null || start.length() != end.length())         
+            return 0;
+        Queue<String> queue = new LinkedList<String>();
+        queue.add(start);
+        Set<String> visited = new HashSet<String>();
+        visited.add(start);
+        int curNum = 0, lastNum = 1, levels = 1;
+        while(!queue.isEmpty()) {
+            String cur = queue.poll();
+            lastNum--;
+            for(int i=0;i<cur.length();i++) {
+                char [] arr = cur.toCharArray();
+                for(char c='a';c<='z';c++) {
+                    arr[i] = c;
+                    String str = new String(arr);
+                    if(str.equals(end)) {
+                        return levels + 1;
+                    }
+                    if(dict.contains(str) && !visited.contains(str)) {
+                        queue.add(str);
+                        curNum++;
+                        visited.add(str);
+                    }
+                }
+            }
+            if(lastNum == 0) {
+                levels++;
+                lastNum = curNum;
+                curNum = 0;
+            }
+        }
+        return 0;
+    }

@@ -26,3 +26,29 @@ public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         }
         return map.get(node);
     }
+
+//DFS
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {  
+        if(node == null)
+            return null;
+        Stack<UndirectedGraphNode> stack = new Stack<UndirectedGraphNode>();
+        HashMap<UndirectedGraphNode,UndirectedGraphNode> visited = new HashMap<UndirectedGraphNode,UndirectedGraphNode>();
+        stack.push(node);
+        UndirectedGraphNode copy = new UndirectedGraphNode(node.label);
+        visited.put(node,copy);
+        while(!stack.isEmpty()) {
+            UndirectedGraphNode cur = stack.pop();
+            for(int i=0;i<cur.neighbors.size();i++) {
+                UndirectedGraphNode ugn = cur.neighbors.get(i);
+                if(visited.containsKey(ugn)) {
+                    visited.get(cur).neighbors.add(visited.get(ugn));
+                }else {
+                    copy = new UndirectedGraphNode(ugn.label);
+                    visited.put(ugn,copy);
+                    stack.push(ugn);
+                    visited.get(cur).neighbors.add(copy);;
+                }
+            }
+        }
+        return visited.get(node);
+    }

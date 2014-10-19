@@ -1,29 +1,26 @@
 //This can be used as a template for BFS.
 //queue,visited,curNum,lastNum,
 //When adding elements, check whether it is inside the visited.
+//If is tree or directed tree, there is no need to use visited. If it is graph, then use visited.
 public List<List<Integer>> levelOrder(TreeNode root) { 
         List<List<Integer>> list = new ArrayList<List<Integer>>();
         if(root == null)
             return list;
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.add(root);
-        Set<TreeNode> visited = new HashSet<TreeNode>();
-        visited.add(root);
         List<Integer> childList = new ArrayList<Integer>();
         int curNum = 0, lastNum = 1;
         while(!queue.isEmpty()) {
             TreeNode cur = queue.poll();
             lastNum--;
             childList.add(cur.val);
-            if(cur.left != null && !visited.contains(cur.left)) {
+            if(cur.left != null) {
                 queue.add(cur.left);
                 curNum++;
-                visited.add(cur.left);
             }
-            if(cur.right != null && !visited.contains(cur.right)) {
+            if(cur.right != null) {
                 queue.add(cur.right);
                 curNum++;
-                visited.add(cur.right);
             }
             if(lastNum == 0) {
                 list.add(childList);

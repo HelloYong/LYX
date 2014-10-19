@@ -1,0 +1,33 @@
+public List<List<Integer>> zigzagLevelOrder(TreeNode root) { 
+        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        if(root == null)
+            return list;
+        List<Integer> childList = new ArrayList<Integer>();
+        boolean even = true;
+        Stack<TreeNode> lastStack = new Stack<TreeNode>();
+        Stack<TreeNode> curStack = new Stack<TreeNode>();
+        lastStack.push(root);
+        while(!lastStack.isEmpty()) {
+            TreeNode cur = lastStack.pop();
+            childList.add(cur.val);
+            if(even) {
+                if(cur.left != null)
+                    curStack.push(cur.left);
+                if(cur.right != null)
+                    curStack.push(cur.right);
+            }else {
+                if(cur.right != null)
+                    curStack.push(cur.right);
+                if(cur.left != null)
+                    curStack.push(cur.left);
+            }
+            if(lastStack.isEmpty()) {
+                list.add(childList);
+                childList = new ArrayList<Integer>();
+                lastStack = curStack;
+                curStack = new Stack<TreeNode>();
+                even = !even; 
+            }
+        }
+        return list;
+    }

@@ -19,3 +19,45 @@ public String strStr(String haystack, String needle) {
         }
         return null;
     }
+
+//KMP algorithm
+//KMP algorithm
+    public String strStr(String haystack, String needle) {  
+        if(haystack == null || needle == null)
+            return "";
+        if(needle.length() == 0)
+            return haystack;
+        int [] arr = new int[needle.length()];
+        arr[0] = -1;
+        next(needle,arr);
+        int len1 = haystack.length();
+        int len2 = needle.length();
+        int i=0,j=0;
+        while(i<len1 && j<len2) {
+            if(haystack.charAt(i) == needle.charAt(j)){
+                i++;
+                j++;
+            }else if(j == 0) {
+                i++;
+            }else {
+                j = arr[j-1] + 1;
+            }
+        }
+        return j == len2 ? haystack.substring(i-len2):null;
+        
+    }
+    
+    public void next(String needle,int [] arr) {
+        if(needle == null || needle.length() == 0)
+            return;
+        int n = needle.length();
+        for(int j=1;j<n;j++) {
+            int i = arr[j-1];
+            while(needle.charAt(j) != needle.charAt(i+1)  && i >= 0)
+                i = arr[i];
+            if(needle.charAt(j) == needle.charAt(i+1))
+                arr[j] = i+1;
+            else
+                arr[j] = -1;
+        }
+    }

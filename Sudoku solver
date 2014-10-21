@@ -1,0 +1,49 @@
+// NP problem using recursion to solve this problem.
+// There is no need to check the while grid when insert an element, just check its row, col and block.
+public void solveSudoku(char[][] board) {
+        if(board == null || board.length != 9 || board[0].length != 9)
+            return;
+        helper(board,0,0);
+    }
+    
+    public boolean helper(char[][] board, int x, int y) {
+        if(y>=9)
+            return helper(board,x+1,0);
+        if(x == 9)
+            return true;
+        
+        if(board[x][y] == '.') {
+            for(int i=1;i<=9;i++) {
+                board[x][y] = (char)(i + '0');
+                if(isValid(board,x,y)) {
+                    if(helper(board,x,y+1)){
+                        return true;
+                    }
+                }
+                board[x][y] = '.';
+            }
+        }else {
+            return helper(board,x,y+1);
+        }
+        return false;
+    }
+    
+    public boolean isValid(char [][] board, int x, int y) {
+        for(int i=0;i<9;i++) {
+            if(y != i && board[x][y] == board[x][i])
+                return false;
+        }
+        for(int i=0;i<9;i++) {
+            if(x != i && board[x][y] == board[i][y])
+                return false;
+        }
+        int row = 3*(x/3);
+        int col = 3*(y/3);
+        for(int i=row;i<row+3;i++) {
+            for(int j=col;j<col+3;j++) {
+                if(x != i && j != y && board[x][y] == board[i][j])
+                    return false;
+            }
+        }
+        return true;
+    }

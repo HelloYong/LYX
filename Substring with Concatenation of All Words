@@ -1,0 +1,58 @@
+//Some thoughts about this problem.
+//Very similar to google phone interview, make hash copy, How to compare two hashmap
+//Same count 
+//and L.get(key) >= S.get(k)
+// If you will delete some item after add it, then there is no need to add.(For hashmap and set).
+
+public List<Integer> findSubstring(String S, String[] L) { 
+        List<Integer> list = new ArrayList<Integer>();
+        if(S == null || S.length() == 0 || L == null || L.length == 0)
+            return list;
+        HashMap<String,Integer> map = new HashMap<String,Integer>();
+        for(String str : L) {
+            if(map.containsKey(str)) {
+                map.put(str,map.get(str) + 1);
+            } else {
+                map.put(str,1);
+            }
+        }
+        for(int i = 0;i < L[0].length(); i++) {
+            int left = i;
+            int count = 0;
+            HashMap<String,Integer> subMap = new HashMap<String,Integer>();
+            for(int right = i; right <= S.length()-L[0].length();right += L[0].length()) {
+                String str = S.substring(right,right+L[0].length());
+                if(map.containsKey(str)) {
+                    if(subMap.containsKey(str)) {
+                        if(subMap.get(str) < map.get(str)) {
+                            subMap.put(str,subMap.get(str)+1);
+                            count++;
+                        }else if(subMap.get(str) == map.get(str)) {
+                            while(!S.substring(left,left+L[0].length()).equals(str)){
+                                if(subMap.get(S.substring(left,left+L[0].length())) == 1) {
+                                    subMap.remove(S.substring(left,left+L[0].length()));
+                                }else {
+                                    subMap.put(S.substring(left,left+L[0].length()),
+                                        subMap.get(S.substring(left,left+L[0].length()))-1);
+                                }
+                                left += L[0].length();
+                                count--;
+                            }
+                            left += L[0].length();
+                        }
+                    }else {
+                        subMap.put(S.substring(right,right+L[0].length()),1);
+                        count++;
+                    }
+                    if(count == L.length)
+                        list.add(left);
+                }else {
+                    subMap.clear();
+                    left = right + L[0].length();
+                    count = 0;
+                }
+            } 
+            
+        }
+        return list;
+    }

@@ -1,0 +1,53 @@
+//Consider another solution without extra space. Three scans. 
+//O -> N -> O -> N -> O -> N
+    public RandomListNode copyRandomList(RandomListNode head) { 
+        if(head == null)
+            return null;
+        RandomListNode walker = head;
+        while(walker != null) {
+            RandomListNode newListNode = new RandomListNode(walker.label);
+            newListNode.next = walker.next;
+            walker.next = newListNode;
+            walker = walker.next.next;
+        }
+        walker = head;
+        while(walker != null) {
+            if(walker.random != null) 
+                walker.next.random = walker.random.next;
+            walker = walker.next.next;
+        }
+        walker = head;
+        RandomListNode newHead = head.next;
+        while(walker != null) {
+            RandomListNode newNode = walker.next;
+            walker.next = newNode.next;
+            if(newNode.next != null)
+                newNode.next = newNode.next.next;
+            walker = walker.next;
+        }
+        return newHead;
+    }
+    
+//Use hashmap, store <oldNode,newNode> to hashmap.
+    public RandomListNode copyRandomList(RandomListNode head) { 
+        if(head == null)
+            return null;
+        RandomListNode walker = head;
+        HashMap<RandomListNode,RandomListNode> map = new HashMap<RandomListNode,RandomListNode>();
+        RandomListNode dummy = new RandomListNode(0);
+        RandomListNode rln = dummy;
+        while(walker != null) {
+            RandomListNode copy = new RandomListNode(walker.label);
+            rln.next = copy;
+            map.put(walker,copy);
+            rln = rln.next;
+            walker = walker.next;
+        }
+        walker = head;
+        while(walker!=null) {
+            RandomListNode random = walker.random;
+            map.get(walker).random = map.get(random);
+            walker = walker.next;
+        }
+        return dummy.next;
+    }

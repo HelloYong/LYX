@@ -1,0 +1,13 @@
+//DP res[n] = res[0]*res[n-1] + res[1]*res[n-2] + ... + res[n-2]*res[1] + res[n-1]*res[0];
+public int numTrees(int n) {
+        if(n <= 1)
+            return n;
+        int res[] = new int[n+1];
+        res[0] = 1;
+        for(int i=1;i<=n;i++) {
+            for(int j=0;j<i;j++) {
+                res[i] += res[j]*res[i-j-1];
+            }
+        }
+        return res[n];
+}

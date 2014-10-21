@@ -1,0 +1,36 @@
+//大家看到代码中还写了一个allSamePoints的函数，这是一个非常corner的情况，就是所有点都是一个点的情况，因为下面我们要跳过重复的点（否则两个重合点会认为任何点都在他们构成的直线上），
+//但是偏偏当所有点都重合时，我们需要返回所有点。
+//除了这种情况，只要有一个点不重合，我们就会从那个点得到结果，这是属于比较tricky的情况
+
+public int maxPoints(Point[] points) { 
+        if(points == null)
+            return 0;
+        if(points.length <= 1)
+            return points.length;
+        if(isSame(points))
+            return points.length;
+        int max = 0;
+        for(int i=0;i<points.length-1;i++) {
+            for(int j = i+1; j<points.length;j++) {
+                if(points[i].x == points[j].x && points[i].y == points[j].y)
+                    continue;
+                //The reason to start from 0 is that it will consider situation where i and j are some points.
+                int count = 2;
+                for(int k=0;k<points.length;k++) {
+                    if(k!=i && k !=j && (points[k].y-points[j].y)*(points[j].x-points[i].x) == 
+                        (points[k].x-points[j].x)*(points[j].y-points[i].y)) {
+                        count++;
+                    }
+                }
+                max = Math.max(max,count);
+            }
+        }
+        return max;
+    }
+    public boolean isSame(Point[] points) {
+        for(int i=0; i < points.length - 1; i++) {
+            if(points[i].x != points[i+1].x || points[i].y != points[i+1].y)
+                return false;
+        }
+        return true;
+    }

@@ -12,3 +12,18 @@ public int uniquePaths(int m, int n) {
         }
         return helper[n-1];
     }
+
+//Using recursion
+//Recursive solution
+    public int uniquePaths(int m, int n) {
+        if(m <= 0 || n <= 0)
+            return 0;
+        return helper(1,1,m,n);
+    }
+    public int helper(int i, int j, int m, int n) {
+        if(i == m && j == n)
+            return 1;
+        if(i > m || j > n)
+            return 0;
+        return helper(i+1,jm,n) + helper(i,j+1,m,n);
+    }

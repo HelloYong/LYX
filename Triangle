@@ -1,0 +1,55 @@
+  //Using recusion, time complexity O(n^2), space complexity, O(n)
+    public int minimumTotal(List<List<Integer>> triangle) { 
+        if(triangle == null || triangle.size() == 0)
+            return 0;
+        return helper(triangle,0,0);
+    }
+    
+    public int helper(List<List<Integer>> list, int level, int pos) {
+        if(level == list.size())
+            return 0;
+        int leftValue = helper(list,level+1,pos);
+        int rightValue = helper(list,level+1,pos+1);
+        return Math.min(leftValue,rightValue) + list.get(level).get(pos);
+    }
+    
+    //Using DP  From top to bottom
+    public int minimumTotal(List<List<Integer>> triangle) { 
+        if(triangle == null || triangle.size() == 0)
+            return 0;
+        int min = Integer.MAX_VALUE;
+        int res [] = new int[triangle.size()];
+        res[0] = triangle.get(0).get(0);
+        for(int i=1;i<triangle.size();i++) {
+            int tmp = res[0], j=1;
+            for(j=1;j<triangle.get(i).size()-1;j++) {
+                int t = res[j];
+                res[j] = triangle.get(i).get(j) +  Math.min(res[j],tmp);
+                tmp = t; 
+            }
+            res[0] = triangle.get(i).get(0) + res[0];
+            res[j] = tmp + triangle.get(i).get(j);
+        }
+        for(int i=0;i<res.length;i++) {
+            min = Math.min(min,res[i]);
+        }
+        return min;
+    }
+    
+    //Using DP from bottom to top
+    public int minimumTotal(List<List<Integer>> triangle) {
+        if(triangle == null || triangle.size() == 0)
+            return 0;
+        int res [] = new int[triangle.size()];
+        List<Integer> last = triangle.get(triangle.size()-1);
+        for(int i=0;i<triangle.size();i++) {
+            res[i] = last.get(i);
+        }
+        
+        for(int i=triangle.size()-2;i>=0;i--) {
+            for(int j=0;j<i+1;j++) {
+                res[j] = Math.min(res[j],res[j+1]) + triangle.get(i).get(j);
+            }
+        }
+        return res[0];
+    }

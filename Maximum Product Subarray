@@ -1,0 +1,14 @@
+public int maxProduct(int[] A) {
+        if(A == null || A.length == 0)
+            return 0;
+        int localMax = A[0];
+        int localNeg = A[0];
+        int max = A[0];
+        for(int i = 1; i < A.length; i++) {
+            int tmp = localMax;
+            localMax = Math.max(Math.max(localMax*A[i],A[i]),localNeg*A[i]);
+            localNeg = Math.min(Math.min(localNeg*A[i],A[i]),tmp*A[i]);
+            max = Math.max(max,localMax);
+        }
+        return max;
+    }

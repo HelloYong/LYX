@@ -1,0 +1,41 @@
+// an NP problem
+
+//Using recursion
+    public List<List<Integer>> subsets(int [] S) {
+        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        if(S == null || S.length == 0)
+            return list;
+        List<Integer> subList = new ArrayList<Integer>();
+        Arrays.sort(S);
+        helper(S,list,subList,0);
+        return list;
+    }
+    
+    public void helper(int [] S, List<List<Integer>> list, List<Integer> subList, int index) {
+        List<Integer> tmp = new ArrayList<Integer>(subList);
+        list.add(tmp);
+        for(int i=index;i<S.length;i++) {
+            subList.add(S[i]);
+            helper(S,list,subList,i+1);
+            subList.remove(subList.size()-1);
+        }
+    }
+    
+    //Use iterator
+    public List<List<Integer>> subsets(int [] S) { 
+        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        if(S == null || S.length == 0)
+            return list;
+        List<Integer> subList = new ArrayList<Integer>();
+        list.add(subList);
+        Arrays.sort(S);
+        for(int i=0;i<S.length;i++) {
+            int size = list.size();
+            for(int j=0;j<size;j++) {
+                List<Integer> tmp = new ArrayList<Integer>(list.get(j));
+                tmp.add(S[i]);
+                list.add(tmp);
+            }
+        }
+        return list;
+    }

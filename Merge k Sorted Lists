@@ -1,0 +1,36 @@
+public ListNode mergeKLists(List<ListNode> lists) { 
+        if(lists == null || lists.size() == 0)
+            return null;
+        return helper(lists,0,lists.size()-1);
+    }
+    
+    public ListNode helper(List<ListNode> lists, int x, int y) {
+        if(x == y)
+            return lists.get(x);
+        int mid = x + (y - x)/2;
+        ListNode left = helper(lists,x,mid);
+        ListNode right = helper(lists,mid+1,y);
+        return mergeTwoLists(left,right);
+    }    
+    
+    public ListNode mergeTwoLists(ListNode node1, ListNode node2) {
+        if(node1 == null)
+            return node2;
+        if(node2 == null)
+            return node1;
+        ListNode helper = new ListNode(0);
+        helper.next = node1;
+        ListNode walker = helper;
+        while(node1 != null && node2 != null) {
+            if(node1.val > node2.val) {
+                walker.next = node2;
+                node2 = node2.next;
+            }else {
+                walker.next = node1;
+                node1 = node1.next;
+            }
+            walker = walker.next;
+        }
+        walker.next = (node1 == null?node2:node1);
+        return helper.next;
+    }

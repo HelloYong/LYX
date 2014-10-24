@@ -1,0 +1,24 @@
+//Where duplication exist, we add the element to half of the list.
+public List<List<Integer>> subsetsWithDup(int[] num) { 
+        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        if(num == null || num.length == 0)
+            return list;
+        List<Integer> subList = new ArrayList<Integer>();
+        list.add(subList);
+        int start = 0;
+        Arrays.sort(num);
+        for(int i=0;i<num.length;i++) {
+            int size = list.size();
+            for(int j=start;j<size;j++) {
+                List<Integer> tmp = new ArrayList<Integer>(list.get(j));
+                tmp.add(num[i]);
+                list.add(tmp);
+            }
+            if(i<num.length - 1 && num[i] == num[i+1]) {
+                start = size;
+            }else {
+                start = 0;
+            }
+        }
+        return list;
+    }

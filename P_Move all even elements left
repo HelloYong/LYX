@@ -1,0 +1,22 @@
+  //Give an array of integer, reorder this array so that all the even elements are on the left of the odd elements.
+  public void solution(int [] array) {
+        if(array == null || array.length == 0)
+            return;
+        int left = 0, right = array.length - 1;
+        while(left < right) {
+            while(left < array.length && array[left]%2 == 0) {
+                left ++;
+            }
+            while(right >= 0 && array[right] % 2 == 1){
+                right--;
+            }
+            if(left < right){
+                int tmp = array[left];
+                array[left] = array[right];
+                array[right] = tmp;
+                left++;
+                right--;
+            }
+
+        }
+    }

@@ -1,0 +1,36 @@
+// Merge sort
+public ListNode sortList(ListNode head) { 
+        if(head == null || head.next == null)
+            return head;
+        ListNode walker = head;
+        ListNode runner = head;
+        while(runner!= null && runner.next != null && runner.next.next != null) {
+            walker = walker.next;
+            runner = runner.next.next;
+        }
+        ListNode half = walker.next;
+        walker.next = null;
+        return merge(sortList(head),sortList(half));
+    }
+    
+    public ListNode merge(ListNode head1,ListNode head2) {
+        if(head1 == null)
+            return head2;
+        if(head2 == null)
+            return head1;
+        ListNode helper = new ListNode(0);
+        helper.next = head1;
+        ListNode walker = helper;
+        while(head1 != null && head2 != null) {
+            if(head1.val >  head2.val) {
+                walker.next = head2;
+                head2 = head2.next;
+            }else {
+                walker.next = head1;
+                head1 = head1.next;
+            }
+            walker = walker.next;
+        }
+        walker.next = (head1 == null ? head2 : head1);
+        return helper.next;
+    }

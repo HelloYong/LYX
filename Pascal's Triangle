@@ -1,0 +1,19 @@
+public List<List<Integer>> generate(int numRows) { 
+        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        if(numRows <= 0)
+            return list;
+        List<Integer> childList = new ArrayList<Integer>();
+        childList.add(1);
+        list.add(childList);
+        for(int i=2;i<=numRows;i++) {
+            childList = new ArrayList<Integer>();
+            childList.add(1);
+            List<Integer> tmp = list.get(list.size()-1);
+            for(int j=0;j<tmp.size()-1;j++) {
+                childList.add(tmp.get(j)+tmp.get(j+1));
+            }
+            childList.add(1);
+            list.add(childList);
+        }
+        return list;
+    }

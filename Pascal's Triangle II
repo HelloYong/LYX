@@ -1,0 +1,16 @@
+public List<Integer> getRow(int rowIndex) {  
+        List<Integer> list = new ArrayList<Integer>();
+        if(rowIndex < 0)
+            return list;
+        list.add(1);
+        for(int i=1;i<=rowIndex;i++) {
+            List<Integer> newList = new ArrayList<Integer>();
+            newList.add(1);
+            for(int j=0;j<list.size()-1;j++) {
+                newList.add(list.get(j)+list.get(j+1));
+            }
+            newList.add(1);
+            list = newList;
+        }
+        return list;
+    }

@@ -1,0 +1,14 @@
+  //这道题是比较简单的数组操作，思路是一个指针从前往后走，如果遇到要删除的元素，就从后面调一个替换它，直到结束
+  public int removeElement(int[] A, int elem) { 
+        if(A == null || A.length == 0)
+            return 0;
+        int length = A.length;
+        for(int i=0;i<length;i++) {
+            if(A[i] == elem) {
+                A[i] = A[length - 1];
+                length --;
+                i--;
+            }
+        }
+        return length;
+    }

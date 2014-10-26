@@ -1,0 +1,20 @@
+    //Greedy Algorithm
+    //点i的reach范围就是i+A[i]，在i的reach范围内找reach范围最大的点，
+    //这个点就一定是最短步数的跳转点，继续找下去，这样能构建最短解法
+    public int jump(int[] A) {
+        if(A == null || A.length <= 1)
+            return 0;
+        int steps = 0;
+        int lastReach = 0;
+        int reach = 0;
+        for(int i=0;i<A.length && i<=reach;i++) {
+            if(i > lastReach) {
+                steps++;
+                lastReach = reach;
+            }
+            reach = Math.max(reach,A[i]+i);
+        }
+        if(reach < A.length - 1)
+            return 0;
+        return steps;
+    }

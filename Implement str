@@ -61,3 +61,25 @@ public String strStr(String haystack, String needle) {
                 arr[j] = -1;
         }
     }
+    
+    //Using rolling hash
+    public String strStr(String haystack, String needle) { 
+        if(haystack == null || needle == null || needle.length() > haystack.length())
+            return null;
+        int base = 29;
+        long patternhash = 0;
+        long hayhash = 0;
+        long tempbase = 1;
+        for(int i=0;i<needle.length();i++) {
+            patternhash += (needle.charAt(i)-'a'+1)*tempbase;
+            hayhash += (haystack.charAt(i)-'a'+1)*tempbase;
+            tempbase *= base;
+        }
+        if(patternhash == hayhash)  return haystack;
+        for(int i=needle.length();i<haystack.length();i++) {
+            hayhash = hayhash/base + (haystack.charAt(i)-'a'+1)*tempbase/base;
+            if(hayhash == patternhash)
+                return haystack.substring(i-needle.length()+1);
+        }
+        return null;
+    }

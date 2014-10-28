@@ -1,0 +1,20 @@
+public TreeNode buildTree(int[] preorder, int[] inorder) { 
+        if(preorder == null || preorder == null || preorder.length != inorder.length)
+            return null;
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(int i=0;i<inorder.length;i++) {
+            map.put(inorder[i],i);
+        }
+        return helper(preorder,inorder,0,preorder.length-1,0,inorder.length-1,map);
+    }
+    
+    public TreeNode helper(int[] preorder, int[] inorder, int s1, int e1, int s2, int e2, HashMap<Integer,Integer> map) {
+        if(s1 > e1 || s2 > e2)  return null;
+        TreeNode root = new TreeNode(preorder[s1]);
+        int index = map.get(preorder[s1]);
+        TreeNode left = helper(preorder,inorder,s1+1,s1+index-s2,s2,index-1,map);
+        TreeNode right = helper(preorder,inorder,s1+index-s2+1,e1,index+1,e2,map);
+        root.left = left;
+        root.right = right;
+        return root;
+    }

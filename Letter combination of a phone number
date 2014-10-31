@@ -1,0 +1,157 @@
+// Iterator using three loop, very similar with subsets.
+public List<String> letterCombinations(String digits) {
+        List<String> list = new ArrayList<String>();
+        list.add("");
+        if(digits == null || digits.length() == 0)
+            return list;
+        for(int i=0;i<digits.length();i++) {
+            String letters = getString(digits.charAt(i));
+            List<String> tmp = new ArrayList<String>();
+            for(int j=0;j<letters.length();j++) {
+                for(int k=0;k<list.size();k++){
+                    String newStr = list.get(k) + Character.toString(letters.charAt(j));
+                    tmp.add(newStr);
+                }
+            }
+            list = tmp;
+        }
+        return list;
+    }
+    
+    public String getString(char c) {
+        switch(c) {
+            case '2':   
+                return "abc";
+            case '3':   
+                return "def";
+            case '4':
+                return "ghi";
+            case '5':
+                return "jkl";
+            case '6':
+                return "mno";
+            case '7':
+                return "pqrs";
+            case '8':
+                return "tuv";
+            case '9':
+                return "wxyz";
+            case '0':
+                return " ";
+            default:
+                return "";
+        }
+    }
+    //Recursion: using backtracking
+     public List<String> letterCombinations(String digits) {
+        List<String> list = new ArrayList<String>();
+        StringBuffer sb = new StringBuffer();
+        helper(list,digits,0,sb);
+        return list;
+    }
+    
+    public void helper(List<String> list,String digits, int index,StringBuffer sb) {
+        if(index == digits.length()) {
+            String str = new String(sb);
+            list.add(str);
+            return;
+        }
+        char c = digits.charAt(index);
+        switch(c) {
+            case '2':
+                sb.append("a");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("b");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("c");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                break;
+            case '3':
+                sb.append("d");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("e");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("f");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                break;
+            case '4':
+                sb.append("g");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("h");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("i");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                break;
+            case '5':
+                sb.append("j");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("k");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("l");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                break;
+            case '6':
+                sb.append("m");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("n");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("o");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                break;
+            case '7':
+                sb.append("p");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("q");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("r");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("s");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                break;
+            case '8':
+                sb.append("t");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("u");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("v");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                break;
+            case '9':
+                sb.append("w");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("x");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("y");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                sb.append("z");
+                helper(list,digits,index+1,sb);
+                sb.deleteCharAt(index);
+                break;
+            default:
+        }
+    }

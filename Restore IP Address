@@ -1,0 +1,25 @@
+//The IP address can't be 011.04.11.11, starting with 0
+    public List<String> restoreIpAddresses(String s) {  
+        List<String> list = new ArrayList<String>();
+        if(s == null || s.length() > 12)
+            return list;
+        helper(list,0,s,"",0);
+        return list;
+    }
+    
+    public void helper(List<String> list, int index, String s, String subStr, int groups) {
+        if(index == s.length() && groups == 4) {
+            list.add(subStr);
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        for(int i=index;i<s.length();i++){
+            sb.append(s.charAt(i));
+            if(Integer.parseInt(sb.toString()) > 255 || (sb.charAt(0) == '0' && sb.length() > 1)) {
+                return;
+            }else {
+                String newStr = subStr.length() == 0 ? sb.toString() : subStr + "." + sb.toString();
+                helper(list,i+1,s,newStr,groups+1);
+            }
+        }
+    }

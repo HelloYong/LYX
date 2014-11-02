@@ -1,0 +1,29 @@
+// 
+public ListNode reverse(ListNode head) {
+        if(head == null || head.next == null)
+            return head;
+        ListNode pre = null;
+        ListNode cur = head;
+        while(cur != null) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+    
+//Recursion
+public ListNode recursive_reverse(ListNode head) {
+    if(head == null || head.next==null)
+        return head;
+    return recursive_reverse(head, head.next);
+}
+private ListNode recursive_reverse(ListNode current, ListNode next) 
+{
+    if (next == null) return current;
+    ListNode newHead = recursive_reverse(current.next, next.next);
+    next.next = current;
+    current.next = null;
+    return newHead;
+}

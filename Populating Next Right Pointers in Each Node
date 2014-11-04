@@ -1,0 +1,35 @@
+//One solution: using recursion
+// Time O(n), space O(lgn)
+public void connect(TreeLinkNode root) { 
+        if(root == null || root.left == null)
+            return;
+        helper(root.left,root.right);
+    }
+    
+    public void helper(TreeLinkNode root1, TreeLinkNode root2) {
+        if(root1 == null && root2 == null)
+            return;
+        root1.next = root2;
+        helper(root1.left,root1.right);
+        helper(root1.right,root2.left);
+        helper(root2.left,root2.right);
+    }
+    
+//Uing iterator
+//Using last level list as a queue,
+//Time O(n). Space: O(1)
+public void connect(TreeLinkNode root) { 
+        if(root == null)
+            return;
+        TreeLinkNode next = root, head = root;
+        while(next.left != null) {
+            next.left.next = next.right;
+            if(next.next != null)
+                next.right.next = next.next.left;
+            next = next.next;
+            if(next == null) {
+                next = head.left;
+                head = head.left;
+            }
+        }
+    }

@@ -1,4 +1,6 @@
 // Find the ith smallest element in arr
+//luck case  O(n) T(n) = T(n/10) + O(n)
+//bad case O(n^2)
 public static int findKthElement(int [] arr, int l ,int r, int i) {
 		if(l == r)	return arr[l];
 		int index = helperQuickSort(arr,l,r);

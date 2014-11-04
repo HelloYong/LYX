@@ -1,0 +1,88 @@
+class Node{
+        int key;
+        int value;
+        Node pre,next;
+        public Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+    
+    private int capacity;
+    private int num;
+    private HashMap<Integer,Node> map;
+    private Node first, last;
+    
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        this.num = 0;
+        map = new HashMap<Integer,Node>();
+        first = null;
+        last = null;
+    }
+    
+    public int get(int key) {
+        if(map.containsKey(key)) {
+           Node node = map.get(key);
+           removeNode(node);
+           setHead(node);
+           return node.value;
+        }else{
+            return -1;
+        }
+    }
+    
+    public void set(int key, int value) {
+        if(map.containsKey(key)) {
+            Node node = map.get(key);
+            node.value = value;
+            removeNode(node);
+            setHead(node);
+        }else {
+            Node newNode = new Node(key,value);
+            if(num < capacity) {
+                map.put(key,newNode);
+                num++;
+                setHead(newNode);
+            }else {
+                map.remove(last.key);
+                Node pre = last.pre;
+                last = last.pre;
+                if(last != null) {
+                    last.next = null;
+                }
+                setHead(newNode);
+                map.put(key,newNode);
+            }
+        }
+    }
+    
+    public void setHead(Node node) {
+        node.next = first;
+        node.pre = null;
+        if(first != null) {
+            first.pre = node;
+        }
+        first = node;
+        if(last == null) {
+            last = first;
+        }
+    }
+    
+    public void removeNode(Node node) {
+        Node cur = node;
+        Node pre = node.pre;
+        Node next = node.next;
+        
+        if(pre != null) {
+            pre.next = next;
+        }else {
+            first = next;
+        }
+        
+        if(next != null) {
+            next.pre = pre;
+        }else {
+            last = pre;
+        }
+    }

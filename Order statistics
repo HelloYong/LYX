@@ -1,0 +1,30 @@
+// Find the ith smallest element in arr
+public static int findKthElement(int [] arr, int l ,int r, int i) {
+		if(l == r)	return arr[l];
+		int index = helperQuickSort(arr,l,r);
+		int k = index-l+1;
+		if(i == k)	{
+			return arr[index];
+		}else if(i < k){
+			return findKthElement(arr,l,index-1,i);
+		}else {
+			return findKthElement(arr,index+1,r,i-k);
+		}
+		
+	}
+	
+	public static int helperQuickSort(int [] arr, int l, int r) {
+		int pivot = arr[l];
+		int i = l;
+		for(int j=l+1;j<=r;j++) {
+			if(arr[j]<=pivot){
+				int tmp = arr[i+1];
+				arr[i+1] = arr[j];
+				arr[j] = tmp;
+				i++;
+			}
+		}
+		arr[l] = arr[i];
+		arr[i] = pivot;
+		return i;
+	}

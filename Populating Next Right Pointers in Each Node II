@@ -1,0 +1,25 @@
+// Very efficient solution
+// Create a helper to point to the beginning of a level.
+
+public void connect(TreeLinkNode root) { 
+        if(root == null)
+            return;
+        TreeLinkNode helper = new TreeLinkNode(0);
+        TreeLinkNode pre = root, walker = helper;
+        while(pre != null) {
+            if(pre.left != null) {
+                walker.next = pre.left;
+                walker = walker.next;
+            }
+            if(pre.right != null) {
+                walker.next = pre.right;
+                walker = walker.next;
+            }
+            pre = pre.next;
+            if(pre == null) {
+                pre = helper.next;
+                helper.next = null;
+                walker = helper;
+            }
+        }
+    }

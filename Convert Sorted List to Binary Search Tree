@@ -1,0 +1,61 @@
+//Using a hashmap to search list in O(n) time.
+public TreeNode sortedListToBST(ListNode head) { 
+        if(head == null)
+            return null;
+        HashMap<Integer,TreeNode> map = new HashMap<Integer,TreeNode>();
+        ListNode walker = head;
+        int i = 0;
+        while(walker != null) {
+            TreeNode node = new TreeNode(walker.val);
+            map.put(i,node);
+            walker = walker.next;
+            i++;
+        }
+        return helper(map,0,i);
+    }
+    
+    private TreeNode helper(HashMap<Integer,TreeNode> map, int start, int end) {
+        if(start > end)
+            return null;
+        int mid = start + (end - start)/2;
+        TreeNode node = map.get(mid);
+        if(node != null) {
+            node.left = helper(map,start,mid-1);
+            node.right = helper(map,mid+1,end);
+        }
+        
+        return node;
+    }
+    
+// A very excellent way
+// The order of the list is the order of in-order traversal.
+// So we just do a in-order traversal and out the ListNode int the parameter
+//这时候就要利用到树的中序遍历了，按照递归中序遍历的顺序对链表结点一个个进行访问，
+// 而我们要构造的二分查找树正是按照链表的顺序来的。
+// 思路就是先对左子树进行递归，然后将当前结点作为根，迭代到下一个链表结点，最后在递归求出右子树即可。
+public TreeNode sortedListToBST(ListNode head) { 
+        if(head == null)
+            return null;
+        List<ListNode> list = new ArrayList<ListNode>();
+        list.add(head);
+        ListNode walker = head;
+        int i = 0;
+        while(walker != null) {
+            i++;
+            walker = walker.next;
+        }
+        return helper(list,0,i-1);
+    }
+    
+    public TreeNode helper(List<ListNode> list, int start, int end) {
+        if(start > end)
+            return null;
+        int mid = start + (end - start)/2;
+        TreeNode left = helper(list,start,mid-1);
+        TreeNode node = new TreeNode(list.get(0).val);
+        list.set(0,list.get(0).next);
+        node.left = left;
+        TreeNode right = helper(list,mid+1,end);
+        node.right = right;
+        return node;
+    }

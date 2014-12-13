@@ -1,0 +1,23 @@
+ public List<Integer> postorderTraversal(TreeNode root) { 
+        List<Integer> list = new ArrayList<Integer>();
+        if(root == null)
+            return list;
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode visited = root, pre = null;
+        while(visited != null || !stack.isEmpty()) {
+            if(visited != null) {
+                stack.push(visited);
+                visited = visited.left;
+            }else {
+                TreeNode peekNode = stack.peek();
+                if(peekNode.right != null && pre != peekNode.right) {
+                    visited = peekNode.right;
+                }else {
+                    stack.pop();
+                    list.add(peekNode.val);
+                    pre = peekNode;
+                }
+            }
+        }
+        return list;
+    }

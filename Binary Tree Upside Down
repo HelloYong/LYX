@@ -1,0 +1,21 @@
+public TreeNode upsideDownBinaryTree(TreeNode root) {
+		List<TreeNode> newRoot = new ArrayList<TreeNode>();
+		helperupsideDownBinaryTree(root, newRoot);
+		System.out.println(newRoot.get(0).val);
+		return newRoot.get(0);
+	}
+	
+	private TreeNode helperupsideDownBinaryTree(TreeNode root, List<TreeNode> newRoot) {
+		if(root == null)
+			return null;
+		if(root.left == null && root.right == null) {
+			newRoot.add(root);
+			return root;
+		}
+		TreeNode parent = helperupsideDownBinaryTree(root.left,newRoot);
+		parent.left = root.right;
+		parent.right = root;
+		root.left = null;
+		root.right = null;
+		return parent.right;
+	}

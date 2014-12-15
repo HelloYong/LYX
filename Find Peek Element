@@ -1,0 +1,10 @@
+public int findPeakElement(int[] num) {
+        //Find the pivot that begin to descend
+        if(num == null || num.length == 0)
+            return -1;
+        int index = 0;
+        while(index+1 < num.length && num[index] < num[index+1]) {
+            index++;
+        }
+        return index;
+    }
